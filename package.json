@@ -1,0 +1,25 @@
+{
+  "name": "qm-ac-power-set-power-factor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "set_power_factor.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/modulesQuimera/qm-ac-power-set-power-factor.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/modulesQuimera/qm-ac-power-set-power-factor/issues"
+  },
+  "homepage": "https://github.com/modulesQuimera/qm-ac-power-set-power-factor#readme",
+  "node-red" : {
+    "nodes": {
+        "set_power_factor": "set_power_factor.js"
+    }
+  }
+}

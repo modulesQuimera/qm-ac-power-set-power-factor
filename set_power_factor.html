@@ -1,0 +1,173 @@
+<script type="text/javascript">
+    RED.nodes.registerType('set_power_factor',{
+        category: 'AC Power Module',
+        color: '#FA8072',
+        defaults:{
+            name:{value:""},
+            mapeamento: { value: "", type: "mapping-voltage" },
+            type_mode: {value: 'mono'},
+            pf_select: { value: 'PFA' },
+            PFA_value: { value: "" },
+            PFB_value: { value: "" },
+            PFC_value: { value: "" },
+            PFA_value_solo: { value: ""},
+            PFB_value_solo: { value: ""},
+            PFC_value_solo: { value: ""}
+
+        },
+        inputs:1,
+        outputs:1,
+        icon:  "AC_Power.svg",
+        label: function() { return this.name? "Set Power Factor - " + this.name: "Set Power Factor" },
+        paletteLabel: "Set Power Factor",
+        oneditprepare: function() {
+            var self = this;
+
+            var config_mapeamento = RED.nodes.node(this.mapeamento);
+            
+            
+            $(".type_mode").on("change", function(e) {
+
+                var mode = $(this).val();
+                if (mode === "mono") {$(".MONO").show();$(".TRI").hide();}
+                if (mode === "tri") {$(".TRI").show();$(".MONO").hide(); }
+
+            });
+
+            $(".pf_select").on("change", function(e) {
+                var selected = $(this).val();
+                if (selected === "PFA") {$("#node-input-PFA_value_solo").show(); $("#node-input-PFB_value_solo").hide(); $("#node-input-PFC_value_solo").hide();}
+                if (selected === "PFB") {$("#node-input-PFA_value_solo").hide(); $("#node-input-PFB_value_solo").show(); $("#node-input-PFC_value_solo").hide();}
+                if (selected === "PFC") {$("#node-input-PFA_value_solo").hide(); $("#node-input-PFB_value_solo").hide(); $("#node-input-PFC_value_solo").show();}
+            });
+
+            $(".power_values").keyup(function(e){
+
+                var who = $(this).data('pf');
+                var value = $(this).val();
+
+                if(who === 'PFA_value'){ 
+                   
+                    $("#node-input-PFA_value").val(value);
+                    $("#node-input-PFB_value").val(value);
+                    $("#node-input-PFC_value").val(value);
+                    
+                    $("#node-input-PFA_value_solo").val(value);
+                    $("#node-input-PFB_value_solo").val(value);
+                    $("#node-input-PFC_value_solo").val(value);
+                }
+                if(who === 'PFB_value'){
+                   
+                    $("#node-input-PFB_value").val(value); 
+                    $("#node-input-PFB_value_solo").val(value); 
+
+                    $("#node-input-PFC_value").val(value); 
+                    $("#node-input-PFC_value_solo").val(value); 
+                }
+                if(who === 'PFC_value'){
+                    
+                    $("#node-input-PFC_value").val(value); 
+                    $("#node-input-PFC_value_solo").val(value); 
+                }
+
+            });
+
+        },
+        oneditsave: function() {}
+    });    
+
+</script>
+<style>
+     label { width: 100% !important; margin-bottom: 2px !important; }
+    .columm { display: flex !important; flex-direction: column !important; }
+    hr { width: 40% !important; float: left !important; }
+    .hr-div-setVoltage { display: flex !important; justify-content: space-between !important; }
+    .optional { height: max-content !important; margin-top: 10px !important; }
+    .descript { text-align: center; }
+    .columm { display: flex !important; flex-direction: column !important; }
+    .columm-25 { display: flex !important; flex-direction: column !important; width: 25% !important; float: left !important; align-items: center; justify-content: space-between; }
+    .columm-30 { display: flex !important; flex-direction: column !important; width: 30% !important; float: left !important; }
+    .columm-50 { display: flex !important; flex-direction: column !important; width: 50% !important; float: left !important; }
+    .columm-70 { display: flex !important; flex-direction: column !important; width: 70% !important; float: left !important; }
+    .descript-div { max-width: 444px !important; }
+    span.red-ui-typedInput-type-label { width: 250px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+    .btn-aln { display: flex !important; flex-direction: row-reverse !important; align-content: center; align-items: flex-end; }
+    .check{ width: 20px !important; margin-top: 0px !important; margin-bottom: 3px; }
+    .label-check{ width: 200px !important; margin: 0px !important; }
+    .row { display: flex; flex-direction: row; align-items: center; }
+    .row label { margin: 0; margin-left: 2px;}
+    .form-row2 { display: flex; flex-direction: row; justify-content: space-between;}
+    .box-style { background: #e0e0e0; padding: 18px; border-radius: 4px; box-shadow: 0px 0px 7px 0px #868686; }
+    .container-tester { display: flex; min-width: 620px; width: 100%; flex-direction: column; }
+</style>
+
+<script type="text/html" data-template-name="set_power_factor">
+    <div class="form-row columm descript-div">
+        <strong class="descript">
+            Programs a current value that will be used
+        </strong>
+    </div>
+    <div style=" position: relative; display:flex; margin-top: 20px;">
+        <div class="form-row columm-70">
+            <label style="width: 50% !important;" for="node-input-name" ><i class="fa fa-tag"></i> Identification Note</label>
+            <input type="text" id="node-input-name" placeholder="Name" style="width: 100%">
+        </div>
+    </div>
+     <div class="form-row columm">
+        <label for="node-input-mapeamento"><i class="fa fa-map"></i> PCI Connection Map</label>
+        <input type="text" id="node-input-mapeamento">
+    </div>
+
+    <div class="container-teste">
+        <div class="hr-div-setVoltage">
+            <hr style="width: 36% !important;"> <span class="optional">Set Power Factor</span> <hr style="width: 36% !important;">
+        </div>
+        <div class='form-row columm-50' style='margin-top: 8px;'>
+            <label for='node-input-type_mode'><i class='fa fa-bars'></i> Mode:</label>
+            <select class='type_mode' id='node-input-type_mode' style='width: 140px;'>
+                <option value='mono'>MONO</option>
+                <option value='tri'>TRI</option>
+            </select> 
+        </div>
+        <div class="form-row" style='max-width: 500px;'>
+
+            <div class='form-row MONO' style='margin-top: 8px;'>
+                <label for='node-input-pf_select'><i class='fa fa-bolt'></i> Type:</label>
+                <select class='pf_select' id='node-input-pf_select' style='width: 140px;'>
+                    <option value='PFA' selected>PF A</option>
+                    <option value='PFB'>PF B</option>
+                    <option value='PFC'>PF C</option>
+                </select>
+                <input type="number" step="any" min="-1" max="1" id="node-input-PFA_value_solo" class="power_values" data-pf="PFA_value" placeholder="PF A value" style="width: 140px; margin-left: 10px;">
+                <input type="number" step="any" min="-1" max="1" id="node-input-PFB_value_solo" class="power_values" data-pf="PFB_value" placeholder="PF B value" style="width: 140px; margin-left: 10px; display:none">
+                <input type="number" step="any" min="-1" max="1" id="node-input-PFC_value_solo" class="power_values" data-pf="PFC_value" placeholder="PF C value" style="width: 140px; margin-left: 10px; display:none">
+            </div>
+
+            <div class='form-row2 TRI' style='margin-top: 8px; margin-bottom: 20px; display:none;'>
+                <div class='columm' style='margin-top: 8px;'>
+                    <select class='pf_select' id='node-input-_select1' disabled style='width: 140px;'>
+                        <option value='PFA'selected>PF A</option>
+                    </select>
+                    <input type="number" step="any" min="-1" max="1" class="power_values" id="node-input-PFA_value" data-pf="PFA_value" placeholder="PF A value" style="width: 140px; margin-top: 10px;">
+                </div>
+                <div class='columm' style='margin-top: 8px;'>
+                    <select class='pf_select' id='node-input-_select2' disabled style='width: 140px;'>
+                        <option value='PFB' selected>PF B</option>
+                    </select>
+                    <input type="number" step="any" min="-1" max="1" class="power_values" id="node-input-PFB_value" data-pf="PFB_value" placeholder="PF B value" style="width: 140px; margin-top: 10px;">
+                </div>
+                <div class='columm' style='margin-top: 8px;'>
+                    <select class='pf_select' id='node-input-_select3' disabled style='width: 140px;'>
+                        <option value='PFC' selected>PF C</option>
+                    </select>
+                    <input type="number" step="any" min="-1" max="1" class="power_values" id="node-input-PFC_value" data-pf="PFC_value" placeholder="PF C value" style="width: 140px; margin-top: 10px;">
+                </div>
+            </div>
+
+        </div>
+    </div>
+</script>
+
+<script type="text/html" data-help-name="set_power_factor">
+    <p>Programs a current value that will be used.</p>
+</script>
