@@ -1,6 +1,6 @@
 {
   "name": "qm-ac-power-set-power-factor",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "set_power_factor.js",
   "scripts": {

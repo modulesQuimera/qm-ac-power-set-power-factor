@@ -4,7 +4,7 @@
         color: '#FA8072',
         defaults:{
             name:{value:""},
-            mapeamento: { value: "", type: "mapping-voltage" },
+            mapeamento: { value: "", type: "ac-power-mapping" },
             type_mode: {value: 'mono'},
             pf_select: { value: 'PFA' },
             PFA_value: { value: "" },
@@ -95,7 +95,7 @@
     .check{ width: 20px !important; margin-top: 0px !important; margin-bottom: 3px; }
     .label-check{ width: 200px !important; margin: 0px !important; }
     .row { display: flex; flex-direction: row; align-items: center; }
-    .row label { margin: 0; margin-left: 2px;}
+    .row label { margin: 0; margin-left: 2px; }
     .form-row2 { display: flex; flex-direction: row; justify-content: space-between;}
     .box-style { background: #e0e0e0; padding: 18px; border-radius: 4px; box-shadow: 0px 0px 7px 0px #868686; }
     .container-tester { display: flex; min-width: 620px; width: 100%; flex-direction: column; }
@@ -104,7 +104,7 @@
 <script type="text/html" data-template-name="set_power_factor">
     <div class="form-row columm descript-div">
         <strong class="descript">
-            Programs a current value that will be used
+            Bloco para configuração do fator de potência nas fases A, B e C
         </strong>
     </div>
     <div style=" position: relative; display:flex; margin-top: 20px;">
